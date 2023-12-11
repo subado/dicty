@@ -1,5 +1,6 @@
 import psycopg
 from psycopg import sql
+import pycountry
 
 
 class Database:
@@ -66,3 +67,13 @@ class Database:
                         feature text NOT NULL
                     );
                 """).format(lang_code_len=lang_code_len))
+
+                conn.commit()
+
+                self.insert_languages_codes()
+
+    def insert_languages_codes(self):
+        with psycopg.connect(f'dbname={self.name} user=postgres') as conn:
+            with conn.cursor() as cur:
+                for lang in pycountry.languages:
+                    cur.execute("INSERT INTO languages_codes (code) VALUES (%s)", [lang.alpha_3])
