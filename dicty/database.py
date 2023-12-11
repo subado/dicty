@@ -23,11 +23,12 @@ class Database:
     def create_tables(self):
         with psycopg.connect(f'dbname={self.name} user=postgres') as conn:
             with conn.cursor() as cur:
+                lang_code_len = 3
                 cur.execute("""
                     CREATE TABLE units (
                         unit_id SERIAL PRIMARY KEY,
                         unit text NOT NULL,
-                        language_code char(2) NOT NULL
+                        language_code char(%(lang_code_len)s) NOT NULL
                     );
 
                     CREATE TABLE pronunciations (
@@ -60,4 +61,4 @@ class Database:
                         definition_id integer REFERENCES definitions NOT NULL,
                         feature text NOT NULL
                     );
-                """)
+                """, {'lang_code_len': lang_code_len})
