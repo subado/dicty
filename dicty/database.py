@@ -5,7 +5,7 @@ from psycopg import sql
 class Database:
     def __init__(self, name):
         self.name = name
-        self.create_database()
+        self.create()
 
     def create(self):
         with psycopg.connect('dbname=postgres user=postgres', autocommit=True) as conn:
@@ -24,11 +24,15 @@ class Database:
         with psycopg.connect(f'dbname={self.name} user=postgres') as conn:
             with conn.cursor() as cur:
                 lang_code_len = 3
-                cur.execute("""
+                cur.execute(sql.SQL("""
+                    CREATE TABLE languages_codes (
+                        code char({lang_code_len}) PRIMARY KEY
+                    );
+
                     CREATE TABLE units (
                         unit_id SERIAL PRIMARY KEY,
                         unit text NOT NULL,
-                        language_code char(%(lang_code_len)s) NOT NULL
+                        language_code char({lang_code_len}) REFERENCES languages_codes NOT NULL
                     );
 
                     CREATE TABLE pronunciations (
@@ -61,4 +65,4 @@ class Database:
                         definition_id integer REFERENCES definitions NOT NULL,
                         feature text NOT NULL
                     );
-                """, {'lang_code_len': lang_code_len})
+                """).format(lang_code_len=lang_code_len))
