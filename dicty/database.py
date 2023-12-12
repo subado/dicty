@@ -4,11 +4,11 @@ import pycountry
 
 
 class Database:
-    def __init__(self, name):
+    def __init__(self, name: str) -> None:
         self.name = name
         self.create()
 
-    def create(self):
+    def create(self) -> None:
         with psycopg.connect('dbname=postgres user=postgres', autocommit=True) as conn:
             with conn.cursor() as cur:
                 cur.execute("""
@@ -21,7 +21,7 @@ class Database:
 
                     self.create_tables()
 
-    def create_tables(self):
+    def create_tables(self) -> None:
         with psycopg.connect(f'dbname={self.name} user=postgres') as conn:
             with conn.cursor() as cur:
                 lang_code_len = 3
@@ -72,7 +72,7 @@ class Database:
 
                 self.insert_languages_codes()
 
-    def insert_languages_codes(self):
+    def insert_languages_codes(self) -> None:
         with psycopg.connect(f'dbname={self.name} user=postgres') as conn:
             with conn.cursor() as cur:
                 for lang in pycountry.languages:

@@ -1,7 +1,7 @@
-from dictionary import Dictionary
+from .dictionary import Dictionary
 
 
-def main():
+def main() -> None:
     dicty = Dictionary()
 
 

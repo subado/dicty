@@ -1,6 +1,6 @@
-from database import Database
+from .database import Database
 
 
 class Dictionary:
-    def __init__(self):
+    def __init__(self) -> None:
         self.db = Database('dictionary')
