@@ -14,10 +14,6 @@ psycopg = "^3.1.14"
 pycountry = "^23.12.11"
 mypy = "^1.7.1"
 
-[tool.poetry.scripts]
-main="dicty.__init__:main"
-
-
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
