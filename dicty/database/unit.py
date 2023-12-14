@@ -38,4 +38,5 @@ class Definition(Pronounced):
 class Unit:
     text: str
     language_code: str
-    definitions: List[Definition]
+    frequency: Optional[int] = None
+    definitions: List[Definition] = None

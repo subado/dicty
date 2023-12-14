@@ -33,7 +33,8 @@ class Database:
                     CREATE TABLE units (
                         unit_id SERIAL PRIMARY KEY,
                         unit text UNIQUE NOT NULL,
-                        language_code char({lang_code_len}) REFERENCES languages_codes NOT NULL
+                        language_code char({lang_code_len}) REFERENCES languages_codes NOT NULL,
+                        frequency smallint
                     );
 
                     CREATE TABLE pronunciations (
