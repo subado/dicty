@@ -26,17 +26,22 @@ class GrammaticalFeature:
 
 
 @dataclass
-class Definition(Pronounced):
+class Meaning:
     text: str
-    part_of_speech: Optional[str] = None
     styles: Optional[List[Style]] = None
-    forms: Optional[List[Form]] = None
     grammatical_features: Optional[List[GrammaticalFeature]] = None
+
+
+@dataclass
+class Definition(Pronounced):
+    meanings: List[Meaning] = None
+    frequency: Optional[int] = None
+    part_of_speech: Optional[str] = None
+    forms: Optional[List[Form]] = None
 
 
 @dataclass
 class Unit:
     text: str
     language_code: str
-    frequency: Optional[int] = None
     definitions: List[Definition] = None
