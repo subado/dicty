@@ -1,6 +1,13 @@
 from typing import Optional, List
 from pathlib import Path
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+
+import pycountry
+
+
+class Language:
+    def __init__(self, **kw):
+        self.code = pycountry.languages.get(**kw).alpha_3
 
 
 @dataclass
@@ -16,8 +23,8 @@ class Style:
 
 @dataclass
 class Form(Pronounced):
-    name: str
-    text: str
+    name: str = None
+    text: str = None
 
 
 @dataclass
@@ -28,20 +35,20 @@ class GrammaticalFeature:
 @dataclass
 class Meaning:
     text: str
-    styles: Optional[List[Style]] = None
-    grammatical_features: Optional[List[GrammaticalFeature]] = None
+    styles: Optional[List[Style]] = field(default_factory=list)
+    grammatical_features: Optional[List[GrammaticalFeature]] = field(default_factory=list)
 
 
 @dataclass
 class Definition(Pronounced):
-    meanings: List[Meaning] = None
+    meanings: List[Meaning] = field(default_factory=list)
     frequency: Optional[int] = None
     part_of_speech: Optional[str] = None
-    forms: Optional[List[Form]] = None
+    forms: Optional[List[Form]] = field(default_factory=list)
 
 
 @dataclass
 class Unit:
     text: str
-    language_code: str
-    definitions: List[Definition] = None
+    language: Language
+    definitions: List[Definition] = field(default_factory=list)
