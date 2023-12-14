@@ -1,46 +1,41 @@
 from typing import Optional, List
 from pathlib import Path
+from dataclasses import dataclass
 
 
+@dataclass
 class Pronounced:
-    def __init__(self, transcription: Optional[str] = None, pronunciation_file: Optional[Path] = None):
-        self.transcription = transcription
-        self.pronunciation_file = pronunciation_file
+    transcription: Optional[str] = None
+    pronunciation_file: Optional[Path] = None
 
 
+@dataclass
 class Style:
-    def __init__(self, text):
-        self.text = text
+    text: str
 
 
+@dataclass
 class Form(Pronounced):
-    def __init__(self, name, text, **kw):
-        self.name = name
-        self.text = text
-
-        super().__init__(**kw)
+    name: str
+    text: str
 
 
+@dataclass
 class GrammaticalFeature:
-    def __init__(self, text):
-        self.text = text
+    text: str
 
 
+@dataclass
 class Definition(Pronounced):
-    def __init__(self, text: str, part_of_speech: Optional[str] = None,
-                 styles: Optional[List[Style]] = None, forms: Optional[List[Form]] = None,
-                 grammatical_features: Optional[List[GrammaticalFeature]] = None, **kw):
-        self.text = text
-        self.part_of_speech = part_of_speech
-        self.styles = styles
-        self.forms = forms
-        self.grammatical_features = grammatical_features
-
-        super().__init__(**kw)
+    text: str
+    part_of_speech: Optional[str] = None
+    styles: Optional[List[Style]] = None
+    forms: Optional[List[Form]] = None
+    grammatical_features: Optional[List[GrammaticalFeature]] = None
 
 
+@dataclass
 class Unit:
-    def __init__(self, text: str, language_code: str, definitions: List[Definition]):
-        self.text = text
-        self.language_code = language_code
-        self.definitions = definitions
+    text: str
+    language_code: str
+    definitions: List[Definition]
