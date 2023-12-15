@@ -34,7 +34,7 @@ class GrammaticalFeature:
 
 @dataclass
 class Meaning:
-    text: str
+    text: str = None
     styles: Optional[List[Style]] = field(default_factory=list)
     grammatical_features: Optional[List[GrammaticalFeature]] = field(default_factory=list)
 
