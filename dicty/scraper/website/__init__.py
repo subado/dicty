@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from abc import ABCMeta, abstractmethod
 
 from selenium.webdriver.remote.webdriver import BaseWebDriver
 
@@ -11,7 +12,7 @@ class Selectors:
     search_field: str
 
 
-class Website:
+class Website(metaclass=ABCMeta):
     def __init__(self, name: str, url: str, timeout: float, language: Language, selectors: Selectors):
         self.name = name
         self.url = url
@@ -19,5 +20,6 @@ class Website:
         self.language = language
         self.selectors = selectors
 
+    @abstractmethod
     def get_unit(driver: BaseWebDriver) -> Unit:
-        pass
+        return NotImplemented
