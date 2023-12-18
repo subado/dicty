@@ -42,7 +42,7 @@ class Scraper:
         finally:
             pass
 
-        return website.get_unit(website, self.driver)
+        return website.get_unit(search_text, self.driver)
 
     def __del__(self):
         self.driver.close()
