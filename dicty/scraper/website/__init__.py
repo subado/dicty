@@ -3,7 +3,7 @@ from abc import ABCMeta, abstractmethod
 
 from selenium.webdriver.remote.webdriver import BaseWebDriver
 
-from ..database.unit import Unit, Language
+from ...database.unit import Unit, Language
 
 
 @dataclass
@@ -21,5 +21,5 @@ class Website(metaclass=ABCMeta):
         self.selectors = selectors
 
     @abstractmethod
-    def get_unit(driver: BaseWebDriver) -> Unit:
+    def get_unit(search_text: str, driver: BaseWebDriver) -> Unit:
         return NotImplemented
