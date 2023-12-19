@@ -27,11 +27,11 @@ class Collins(Website):
         super().__init__(name, url, timeout, language, selectors)
 
     @catch_none(NoSuchElementException)
-    def get_frequency(self, def_tag: WebElement, driver: WebDriver) -> int:
+    def get_frequency(self, def_tag: WebElement, driver: WebDriver) -> Optional[int]:
         frequency = def_tag.find_element(
             By.XPATH, './/span[@class="word-frequency-img"]').get_attribute('data-band')
         if frequency is None:
-            raise NoSuchElementException
+            return None
         return int(frequency)
 
     @catch_none(NoSuchElementException)
@@ -40,11 +40,11 @@ class Collins(Website):
             By.XPATH, './/div[@class="mini_h2"]//span[@class="pron"]').text)
 
     @catch_none(NoSuchElementException)
-    def get_pronunciation_file(self, tag: WebElement, driver: WebDriver) -> Path:
+    def get_pronunciation_file(self, tag: WebElement, driver: WebDriver) -> Optional[Path]:
         path = tag.find_element(
             By.XPATH, './/a[contains(@title, "Pronunciation for")]').get_attribute('data-src-mp3')
         if path is None:
-            raise NoSuchElementException
+            return None
         return Path(path)
 
     @catch_none(NoSuchElementException)

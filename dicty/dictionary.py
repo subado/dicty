@@ -1,8 +1,8 @@
-import pycountry
-
 from .database import Database
 from .scraper import Scraper
-from .scraper.website import Website, Selectors
+from .scraper.website import Selectors
+from .scraper.website.collins import Collins
+from .database.unit import Language
 
 
 class Dictionary:
@@ -13,22 +13,14 @@ class Dictionary:
 
     def create_websites(self) -> None:
         self.websites = [
-            Website(
+            Collins(
                 'Collins English Dictionary',
-                'https://www.collinsdictionary.com/dictionary/english',
+                'english',
                 10,
-                pycountry.languages.get(name='English').alpha_3,
+                Language(name='English'),
                 Selectors(
-                    load_persuader='//h1',
-                    search_field='//div[@class="search-input-container"]//input[@class="search-input autoc-input"]',
-                )),
-            Website(
-                "Oxford Learner's Dictionary",
-                'https://www.oxfordlearnersdictionaries.com/definition/english/',
-                8,
-                pycountry.languages.get(name='English').alpha_3,
-                Selectors(
-                    load_persuader='//h1',
-                    search_field='//div[@class="searchfield"]//input[@class="searchfield_input"]')
+                    load_persuader='//div[@class="dictionaries dictionary"]',
+                    search_field='//div[@class="search-input-container"]//input[@class="search-input autoc-input"]'
+                )
             )
         ]
