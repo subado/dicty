@@ -23,9 +23,9 @@ class Style:
 
 @dataclass
 class Form:
-    name: str = None
-    text: str = None
-    pronunciation: Pronunciation = None
+    name: str
+    text: str
+    pronunciation: Optional[Pronunciation] = None
 
 
 @dataclass
@@ -35,9 +35,9 @@ class GrammaticalFeature:
 
 @dataclass
 class Meaning:
-    text: str = None
-    styles: Optional[List[Style]] = field(default_factory=list)
-    grammatical_features: Optional[List[GrammaticalFeature]] = field(default_factory=list)
+    text: str = ''
+    styles: List[Style] = field(default_factory=list)
+    grammatical_features: List[GrammaticalFeature] = field(default_factory=list)
 
 
 @dataclass
@@ -45,8 +45,8 @@ class Definition:
     meanings: List[Meaning] = field(default_factory=list)
     frequency: Optional[int] = None
     part_of_speech: Optional[str] = None
-    forms: Optional[List[Form]] = field(default_factory=list)
-    pronunciation: Pronunciation = None
+    forms: List[Form] = field(default_factory=list)
+    pronunciation: Optional[Pronunciation] = None
 
 
 @dataclass
