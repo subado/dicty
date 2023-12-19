@@ -11,7 +11,7 @@ class Language:
 
 
 @dataclass
-class Pronounced:
+class Pronunciation:
     transcription: Optional[str] = None
     pronunciation_file: Optional[Path] = None
 
@@ -22,9 +22,10 @@ class Style:
 
 
 @dataclass
-class Form(Pronounced):
+class Form:
     name: str = None
     text: str = None
+    pronunciation: Pronunciation = None
 
 
 @dataclass
@@ -40,11 +41,12 @@ class Meaning:
 
 
 @dataclass
-class Definition(Pronounced):
+class Definition:
     meanings: List[Meaning] = field(default_factory=list)
     frequency: Optional[int] = None
     part_of_speech: Optional[str] = None
     forms: Optional[List[Form]] = field(default_factory=list)
+    pronunciation: Pronunciation = None
 
 
 @dataclass

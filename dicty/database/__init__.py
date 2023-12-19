@@ -33,20 +33,23 @@ class Database:
                     CREATE TABLE units (
                         unit_id SERIAL PRIMARY KEY,
                         unit text UNIQUE NOT NULL,
-                        language_code char({lang_code_len}) REFERENCES languages_codes NOT NULL,
+                        language_code char({lang_code_len}) REFERENCES languages_codes NOT NULL
                     );
 
                     CREATE TABLE pronunciations (
+                        pronunciation_id SERIAL PRIMARY KEY,
                         transcription text,
-                        pronunciation_file text
+                        pronunciation_file text,
+                        UNIQUE(transcription,  pronunciation_file)
                     );
 
                     CREATE TABLE definitions (
                         definition_id SERIAL PRIMARY KEY,
                         unit_id integer REFERENCES units NOT NULL,
                         part_of_speech text,
-                        frequency smallint
-                    ) INHERITS (pronunciations);
+                        frequency smallint,
+                        pronunciation_id integer REFERENCES pronunciations
+                    );
 
                     CREATE TABLE meanings (
                         meaning_id SERIAL PRIMARY KEY,
@@ -64,8 +67,9 @@ class Database:
                         form_id SERIAL PRIMARY KEY,
                         definition_id integer REFERENCES definitions NOT NULL,
                         name text NOT NULL,
-                        form text NOT NULL
-                    ) INHERITS (pronunciations);
+                        form text NOT NULL,
+                        pronunciation_id integer REFERENCES pronunciations
+                    );
 
                     CREATE TABLE grammatical_features (
                         feature_id SERIAL PRIMARY KEY,
