@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from abc import ABCMeta, abstractmethod
 
-from selenium.webdriver.remote.webdriver import BaseWebDriver
+from selenium.webdriver.remote.webdriver import WebDriver
 
 from ...database.unit import Unit, Language
 
@@ -21,5 +21,5 @@ class Website(metaclass=ABCMeta):
         self.selectors = selectors
 
     @abstractmethod
-    def get_unit(search_text: str, driver: BaseWebDriver) -> Unit:
+    def get_unit(self, search_text: str, driver: WebDriver) -> Unit:
         return NotImplemented
