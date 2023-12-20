@@ -36,3 +36,14 @@ def catch_none(*e: type[E]) -> Callable[[Callable[P, R]], Callable[P, Optional[R
                 return None
         return inner
     return wrapper
+
+
+T = TypeVar('T')
+
+
+def convert(converter: Callable[[R], T]) -> Callable[[Callable[P, R]], Callable[P, T]]:
+    def wrapper(f: Callable[P, R]) -> Callable[P, T]:
+        def inner(*args: P.args, **kwargs: P.kwargs) -> T:
+            return converter(f(*args, **kwargs))
+        return inner
+    return wrapper
