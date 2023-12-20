@@ -10,10 +10,11 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 
 from .website import Website
+from ..database.unit import Unit
 
 
 class Scraper:
-    def __init__(self, headless=True):
+    def __init__(self, headless: bool = True) -> None:
         self.headless = headless
         options = Options()
 
@@ -24,7 +25,7 @@ class Scraper:
         options.set_capability('pageLoadStrategy', 'none')
         self.driver = webdriver.Firefox(options=options)
 
-    def get_unit(self, search_text: str, website: Website):
+    def get_unit(self, search_text: str, website: Website) -> Unit:
         self.driver.get(website.url)
         try:
             WebDriverWait(self.driver, website.timeout).until(
@@ -44,5 +45,5 @@ class Scraper:
 
         return website.get_unit(search_text, self.driver)
 
-    def __del__(self):
+    def __del__(self) -> None:
         self.driver.close()
