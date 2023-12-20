@@ -1,6 +1,5 @@
 import re
 import copy
-from pathlib import Path
 from typing import List, Optional
 
 from selenium.webdriver.common.by import By
@@ -40,12 +39,10 @@ class Collins(Website):
             By.XPATH, './/div[@class="mini_h2"]//span[@class="pron"]').text)
 
     @catch_none(NoSuchElementException)
-    def get_pronunciation_file(self, tag: WebElement, driver: WebDriver) -> Optional[Path]:
+    def get_pronunciation_file(self, tag: WebElement, driver: WebDriver) -> Optional[str]:
         path = tag.find_element(
             By.XPATH, './/a[contains(@title, "Pronunciation for")]').get_attribute('data-src-mp3')
-        if path is None:
-            return None
-        return Path(path)
+        return path
 
     @catch_none(NoSuchElementException)
     def get_forms(self, content_tag: WebElement, driver: WebDriver) -> List[Form]:
@@ -74,7 +71,7 @@ class Collins(Website):
                         pronunciation = None
         return forms
 
-    def delete_extra_forms(self, part_of_speech: str, forms: List[Form]):
+    def delete_extra_forms(self, part_of_speech: str, forms: List[Form]) -> None:
         for part, form_names in self._part_to_forms_names.items():
             if re.compile(r'\b(?:%s)\b' % part).search(part_of_speech):
                 i = 0
