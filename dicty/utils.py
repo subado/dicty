@@ -27,7 +27,7 @@ def catch(*e: type[E]) -> Callable[[Callable[P, R]], Callable[P, R | E]]:
     return wrapper
 
 
-def catch_none(*e: type[E]) -> Callable[[Callable[P, R]], Callable[P, Optional[R]]]:
+def ignore_exception(*e: type[E]) -> Callable[[Callable[P, R]], Callable[P, Optional[R]]]:
     def wrapper(f: Callable[P, R]) -> Callable[P, Optional[R]]:
         def inner(*args: P.args, **kwargs: P.kwargs) -> Optional[R]:
             try:

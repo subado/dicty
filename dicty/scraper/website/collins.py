@@ -9,7 +9,7 @@ from selenium.webdriver.remote.webelement import WebElement
 
 from . import Website, Selectors
 from ...database.unit import Unit, Definition, Language, Form, Meaning, GrammaticalFeature, Style, Pronunciation
-from ...utils import normalize_str, catch_none
+from ...utils import normalize_str, ignore_exception
 
 
 class Collins(Website):
@@ -25,7 +25,7 @@ class Collins(Website):
         url = 'https://www.collinsdictionary.com/dictionary/' + url
         super().__init__(name, url, timeout, language, selectors)
 
-    @catch_none(NoSuchElementException)
+    @ignore_exception(NoSuchElementException)
     def get_frequency(self, def_tag: WebElement, driver: WebDriver) -> Optional[int]:
         frequency = def_tag.find_element(
             By.XPATH, './/span[@class="word-frequency-img"]').get_attribute('data-band')
@@ -33,18 +33,18 @@ class Collins(Website):
             return None
         return int(frequency)
 
-    @catch_none(NoSuchElementException)
+    @ignore_exception(NoSuchElementException)
     def get_transcription(self, def_tag: WebElement, driver: WebDriver) -> str:
         return normalize_str(def_tag.find_element(
             By.XPATH, './/div[@class="mini_h2"]//span[@class="pron"]').text)
 
-    @catch_none(NoSuchElementException)
+    @ignore_exception(NoSuchElementException)
     def get_pronunciation_file(self, tag: WebElement, driver: WebDriver) -> Optional[str]:
         path = tag.find_element(
             By.XPATH, './/a[contains(@title, "Pronunciation for")]').get_attribute('data-src-mp3')
         return path
 
-    @catch_none(NoSuchElementException)
+    @ignore_exception(NoSuchElementException)
     def get_forms(self, content_tag: WebElement, driver: WebDriver) -> List[Form]:
         word_forms_tags = content_tag.find_elements(By.XPATH, './/span[@class="form inflected_forms type-infl"]/*')
         form_names: List[str] = []
