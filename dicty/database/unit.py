@@ -1,19 +1,18 @@
-from typing import Optional, List
-from pathlib import Path
+from typing import Optional, List, Any
 from dataclasses import dataclass, field
 
 import pycountry
 
 
 class Language:
-    def __init__(self, **kw):
+    def __init__(self, **kw: Any) -> None:
         self.code = pycountry.languages.get(**kw).alpha_3
 
 
 @dataclass
 class Pronunciation:
     transcription: Optional[str] = None
-    pronunciation_file: Optional[Path] = None
+    pronunciation_file: Optional[str] = None
 
 
 @dataclass
