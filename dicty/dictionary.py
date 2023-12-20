@@ -8,7 +8,7 @@ from .database.unit import Language
 class Dictionary:
     def __init__(self) -> None:
         self.db = Database('dictionary')
-        self.scraper = Scraper(headless=False)
+        self.scraper = Scraper(headless=True)
         self.create_websites()
 
     def create_websites(self) -> None:
