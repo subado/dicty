@@ -65,7 +65,7 @@ class Collins(Website):
                     if form:
                         pronunciation = Pronunciation(pronunciation_file=self.get_pronunciation_file(tag, driver))
                         for name in form_names:
-                            forms.append(Form(name=name, text=form, pronunciation=pronunciation))
+                            forms.append(Form(name=name, form=form, pronunciation=pronunciation))
                         form_names = []
                         form = ''
                         pronunciation = None
@@ -119,7 +119,7 @@ class Collins(Website):
                     self.delete_extra_forms(part_of_speech, definitions[part_of_speech].forms)
 
             sense_tag = mean_tag.find_element(By.XPATH, './div[@class="sense"]')
-            mean.text = sense_tag.find_element(By.XPATH, './div[@class="def"]').text
+            mean.meaning = sense_tag.find_element(By.XPATH, './div[@class="def"]').text
 
             senses_tags = sense_tag.find_elements(
                 By.XPATH, 'span[contains(@class, "lbl") and '
@@ -135,7 +135,7 @@ class Collins(Website):
         match = re.compile("^definition of '(.+)'$").match(driver.find_element(By.XPATH, '//h1').text.lower())
         if match:
             text = match.group(1)
-            unit = Unit(text=text, language=self.language)
+            unit = Unit(unit=text, language=self.language)
 
             defs_tags = driver.find_elements(By.XPATH, '//div[contains(@class, "Cob_Adv_Brit")]/*')
 

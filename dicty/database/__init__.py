@@ -103,7 +103,7 @@ class Database:
     def insert_unit(self, cur: Cursor[BaseRow], unit: Unit) -> RowId:
         cur.execute("""
             INSERT INTO units (unit, language_code) VALUES(%(unit)s, %(language_code)s) RETURNING id
-        """, {'unit': unit.text,
+        """, {'unit': unit.unit,
               'language_code': unit.language.code})
 
         row = not_none(cur.fetchone())
@@ -162,7 +162,7 @@ class Database:
             INSERT INTO meanings (definition_id, meaning)
                 VALUES (%(definition_id)s, %(meaning)s) RETURNING id
         """, {'definition_id': definition_id,
-              'meaning': meaning.text})
+              'meaning': meaning.meaning})
         row = not_none(cur.fetchone())
         for style in meaning.styles:
             self.insert_style(cur, style, row.id)
@@ -194,7 +194,7 @@ class Database:
                 VALUES (%(definition_id)s, %(name)s, %(form)s) RETURNING id
         """, {'definition_id': definition_id,
               'name': form.name,
-              'form': form.text})
+              'form': form.form})
         row = not_none(cur.fetchone())
         if form.pronunciation is not None:
             pronunciation_id = self.insert_pronunciation(cur, form.pronunciation)

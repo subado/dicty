@@ -7,8 +7,9 @@ from ..scraper import Scraper
 from ..scraper.website import Selectors
 from ..scraper.website.collins import Collins
 from ..database.unit import Language
+from ..database.unit.json import Encoder
 from ..database.rows import BaseRow, UnitRow, RowId
-from ..utils import add_tabs, not_none
+from ..utils import not_none
 
 
 class Dictionary:
@@ -48,6 +49,7 @@ class Dictionary:
                 if is_not_found:
                     self.db.insert_unit(cur, unit)
                     conn.commit()
+
                 print(f'From {site.name}:\n')
-                print(json.dumps(unit))
+                print(json.dumps(unit, ensure_ascii=False, sort_keys=True, indent=2, cls=Encoder))
                 print()
