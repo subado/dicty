@@ -1,12 +1,14 @@
+import json
+
 from psycopg.rows import class_row
 
-from .database import Database
-from .scraper import Scraper
-from .scraper.website import Selectors
-from .scraper.website.collins import Collins
-from .database.unit import Language
-from .database.rows import BaseRow, UnitRow, RowId
-from .utils import add_tabs, not_none
+from ..database import Database
+from ..scraper import Scraper
+from ..scraper.website import Selectors
+from ..scraper.website.collins import Collins
+from ..database.unit import Language
+from ..database.rows import BaseRow, UnitRow, RowId
+from ..utils import add_tabs, not_none
 
 
 class Dictionary:
@@ -47,5 +49,5 @@ class Dictionary:
                     self.db.insert_unit(cur, unit)
                     conn.commit()
                 print(f'From {site.name}:\n')
-                print(add_tabs(str(unit)))
+                print(json.dumps(unit))
                 print()

@@ -1,6 +1,6 @@
 from typing import Optional, List
 from dataclasses import dataclass, field
-from ..utils import add_tabs
+from ...utils import add_tabs
 
 import pycountry
 
