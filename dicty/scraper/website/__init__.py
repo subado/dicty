@@ -1,9 +1,16 @@
+from typing import List, Optional
 from dataclasses import dataclass
 from abc import ABCMeta, abstractmethod
 
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from ...database.unit import Unit, Language
+from ...db.models import Dictionary, Language, Unit
+
+
+@dataclass
+class LanguagesToUrls:
+    languages: List[Language]
+    urls: List[str]
 
 
 @dataclass
@@ -12,14 +19,13 @@ class Selectors:
     search_field: str
 
 
+@dataclass
 class Website(metaclass=ABCMeta):
-    def __init__(self, name: str, url: str, timeout: float, language: Language, selectors: Selectors):
-        self.name = name
-        self.url = url
-        self.timeout = timeout
-        self.language = language
-        self.selectors = selectors
+    selectors: Selectors
+    base_url: str
+    timeout: float
+    languages_to_urls: List[LanguagesToUrls]
 
     @abstractmethod
-    def get_unit(self, search_text: str, driver: WebDriver) -> Unit:
+    def get_unit(self, driver: WebDriver, dictionary: Dictionary, search_text: str, language: Language) -> Optional[Unit]:
         return NotImplemented

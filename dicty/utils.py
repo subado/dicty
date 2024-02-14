@@ -11,13 +11,6 @@ def normalize_str(s: str) -> str:
     return clean_str(s).lower()
 
 
-def add_tabs(s: str, n: int = 1, sep: str = '\n') -> str:
-    lines = s.split(sep=sep)
-    for i in range(len(lines)):
-        lines[i] = '\t' + lines[i]
-    return sep.join(lines)
-
-
 P = ParamSpec('P')
 R = TypeVar('R')
 E = TypeVar('E', bound=BaseException)
@@ -44,16 +37,3 @@ def ignore_exception(*e: type[E]) -> Callable[[Callable[P, R]], Callable[P, Opti
                 return None
         return inner
     return wrapper
-
-
-def convert(converter: Callable[[R], T]) -> Callable[[Callable[P, R]], Callable[P, T]]:
-    def wrapper(f: Callable[P, R]) -> Callable[P, T]:
-        def inner(*args: P.args, **kwargs: P.kwargs) -> T:
-            return converter(f(*args, **kwargs))
-        return inner
-    return wrapper
-
-
-def not_none(x: Optional[T]) -> T:
-    assert x is not None
-    return x
