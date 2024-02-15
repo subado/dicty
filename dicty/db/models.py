@@ -68,10 +68,10 @@ class Unit(db.Model, Id):
 
 class Pronunciation(db.Model, Id):
     transcription: Mapped[Optional[str]] = mapped_column(Text, default=None)
-    pronunciation_file: Mapped[Optional[str]] = mapped_column(Text, default=None)
+    audio_url: Mapped[Optional[str]] = mapped_column(Text, default=None)
 
     __table_args__ = (
-        UniqueConstraint(transcription, pronunciation_file),
+        UniqueConstraint(transcription, audio_url),
     )
 
 

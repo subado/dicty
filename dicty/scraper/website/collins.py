@@ -53,7 +53,7 @@ class Collins(Website):
             By.XPATH, './/div[@class="mini_h2"]//span[@class="pron"]').text)
 
     @ignore_exception(NoSuchElementException)
-    def get_pronunciation_file(self, driver: WebDriver, tag: WebElement) -> Optional[str]:
+    def get_audio_url(self, driver: WebDriver, tag: WebElement) -> Optional[str]:
         path = tag.find_element(
             By.XPATH, './/a[contains(@title, "Pronunciation for")]').get_attribute('data-src-mp3')
         return path
@@ -76,7 +76,7 @@ class Collins(Website):
 
                 elif 'ptr hwd_sound type-hwd_sound' in class_attr:
                     if text:
-                        pronunciation = Pronunciation(pronunciation_file=self.get_pronunciation_file(driver, tag))
+                        pronunciation = Pronunciation(audio_url=self.get_audio_url(driver, tag))
                         for name in form_names:
                             forms.append(Form(name=name, text=text, pronunciation=pronunciation))
                         form_names = []
@@ -166,7 +166,7 @@ class Collins(Website):
                 common_def.frequency = self.get_frequency(driver, def_tag)
                 common_def.pronunciation = Pronunciation(
                     transcription=self.get_transcription(driver, def_tag),
-                    pronunciation_file=self.get_pronunciation_file(
+                    audio_url=self.get_audio_url(
                         driver, def_tag.find_element(By.XPATH, './/div[@class="mini_h2"]'))
                 )
 
