@@ -1,3 +1,2 @@
-SECRET_KEY = '8677bf6de6b33df07a2461b92dac351775c2024f217ce81e42c578adf942f70a'
-SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg://postgres:6Y7Ar2rKZapZfX3jdKbJxyDbu@localhost/dicty'
-SQLALCHEMY_TRACK_MODIFICATIONS = false
+# SECRET_KEY = '<secret>'
+# SQLALCHEMY_DATABASE_URI = '<postgres database uri>'
