@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+
+package dicty.language;
+
+import "dicty/generic.proto";
+
+service LanguageSerivce {
+  rpc AddLanguage(Language) returns (generic.Empty) {}
+  rpc GetLanguage(GetLanguageRequest) returns (Language) {}
+  rpc ListLanguages(generic.Empty) returns (ListLanguagesResponse) {}
+}
+
+message GetLanguageRequest {
+  message Filter {
+    string name = 1;
+  }
+  oneof params {
+    string code = 1;
+    Filter filter = 2;
+  }
+}
+
+message ListLanguagesResponse {
+  repeated Language languages = 1;
+}
+
+message Language {
+  string code = 1;
+  string name = 2;
+}

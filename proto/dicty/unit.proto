@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+
+package dicty.unit;
+
+import "dicty/generic.proto";
+import "dicty/language.proto";
+import "dicty/dictionary.proto";
+import "dicty/definition.proto";
+
+service UnitService {
+  rpc AddUnit(Unit) returns (generic.Empty) {}
+  rpc GetUnit(GetUnitRequest) returns (Unit) {}
+  rpc ListUnits(ListUnitsRequest) returns (ListUnitsResponse) {}
+}
+
+message GetUnitRequest {
+  message Filter {
+    string val = 1;
+    language.Language language = 2;
+    dictionary.Dictionary dictionary = 3;
+  }
+  oneof params {
+    string id = 1;
+    Filter filter = 2;
+  }
+  optional bool should_be_found = 3;
+}
+
+message ListUnitsRequest {
+  optional GetUnitRequest.Filter filter = 1;
+}
+
+message ListUnitsResponse {
+  repeated Unit units = 1;
+}
+
+message Unit {
+  string id = 1;
+  string val = 2;
+  language.Language language = 3;
+  dictionary.Dictionary dictionary = 4;
+  repeated definition.Definition definitions = 5;
+}

@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+
+package dicty.definition;
+
+import "dicty/pronunciation.proto";
+import "dicty/form.proto";
+import "dicty/meaning.proto";
+
+message Definition {
+  string id = 1;
+  string part_of_speech = 2;
+  double frequency = 3;
+  pronunciation.Pronunciation pronunciation = 4;
+  repeated form.Form forms = 5;
+  repeated meaning.Meaning meanings = 6;
+}

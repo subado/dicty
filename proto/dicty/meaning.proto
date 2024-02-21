@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+
+package dicty.meaning;
+
+import "dicty/example.proto";
+import "dicty/synonym.proto";
+import "dicty/style.proto";
+import "dicty/grammatical_feature.proto";
+
+message Meaning {
+  string id = 1;
+  string val = 2;
+  repeated example.Example examples = 3;
+  repeated synonym.Synonym synonyms = 4;
+  repeated style.Style styles = 5;
+  repeated grammatical_feature.GrammaticalFeature grammatical_features = 6;
+}

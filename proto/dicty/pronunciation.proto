@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+
+package dicty.pronunciation;
+
+message Pronunciation {
+  string id = 1;
+  string transcription = 2;
+  string audio_url = 3;
+}

@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+
+package dicty.dictionary;
+
+import "dicty/generic.proto";
+import "dicty/language.proto";
+
+service DictionarySerivce {
+  rpc GetDictionary(GetDictionaryRequest) returns (Dictionary) {}
+  rpc ListDictionaries(generic.Empty) returns (ListDictionariesResponse) {}
+}
+
+message GetDictionaryRequest {
+  message Filter {
+    string name = 1;
+  }
+  oneof params {
+    string id = 1;
+    Filter filter = 2;
+  }
+}
+
+message ListDictionariesResponse {
+  repeated Dictionary dictionaries = 1;
+}
+
+message Dictionary {
+  string id = 1;
+  string name = 2;
+  repeated language.Language languages = 3;
+}
