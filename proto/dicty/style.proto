@@ -6,5 +6,5 @@ package dicty.style;
 
 message Style {
   string id = 1;
-  string val = 2;
+  string value = 2;
 }

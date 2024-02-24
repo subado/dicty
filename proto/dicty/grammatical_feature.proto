@@ -7,5 +7,5 @@ package dicty.grammatical_feature;
 message GrammaticalFeature {
   string id = 1;
   string name = 2;
-  string val = 3;
+  repeated string values = 3;
 }

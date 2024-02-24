@@ -11,8 +11,8 @@ import "dicty/meaning.proto";
 message Definition {
   string id = 1;
   string part_of_speech = 2;
-  double frequency = 3;
-  pronunciation.Pronunciation pronunciation = 4;
-  repeated form.Form forms = 5;
-  repeated meaning.Meaning meanings = 6;
+  repeated meaning.Meaning meanings = 3;
+  optional double frequency = 4;
+  optional pronunciation.Pronunciation pronunciation = 5;
+  optional repeated form.Form forms = 6;
 }
