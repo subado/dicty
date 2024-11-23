@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "dicty"
+version = "0.1.0"
+description = ""
+authors = ["subado <subado.main@gmail.com>"]
+license = "GPL"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+SQLAlchemy = "^2.0.36"
+beautifulsoup4 = "^4.12.3"
+loguru = "^0.7.2"
+psycopg = "^3.2.3"
+grpcio = "^1.68.0"
+pycountry = "^24.6.1"
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.13.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
