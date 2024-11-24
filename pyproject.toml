@@ -14,6 +14,8 @@ loguru = "^0.7.2"
 psycopg = "^3.2.3"
 grpcio = "^1.68.0"
 pycountry = "^24.6.1"
+alembic = "^1.14.0"
+grpcio-tools = "^1.68.0"
 
 [tool.poetry.group.dev.dependencies]
 mypy = "^1.13.0"
