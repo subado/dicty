@@ -7,6 +7,17 @@ package dicty.definition;
 import "dicty/pronunciation.proto";
 import "dicty/sense.proto";
 import "dicty/part_of_speech.proto";
+import "dicty/generic.proto";
+
+service DefinitionsService {
+  rpc SearchDefinitions(generic.SearchRequest)
+      returns (SearchDefinitionsResponse);
+  rpc AddOrUpdateDefinition(Definition) returns (generic.AddOrUpdateResponse);
+}
+
+message SearchDefinitionsResponse {
+  repeated Definition definitions = 1;
+}
 
 message Definition {
   string uuid = 1;

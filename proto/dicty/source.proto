@@ -5,6 +5,16 @@ option java_multiple_files = true;
 package dicty.source;
 
 import "dicty/language.proto";
+import "dicty/generic.proto";
+
+service SourcesService {
+  rpc SearchSources(generic.SearchRequest) returns (SearchSourcesResponse);
+  rpc AddOrUpdateSource(Source) returns (generic.AddOrUpdateResponse);
+}
+
+message SearchSourcesResponse {
+  repeated Source sources = 1;
+}
 
 message Source {
   string uuid = 1;

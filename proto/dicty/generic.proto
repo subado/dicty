@@ -4,7 +4,22 @@ option java_multiple_files = true;
 
 package dicty.generic;
 
+import "google/protobuf/any.proto";
+
 message Empty {}
+
+message AddOrUpdateResponse {
+  bool is_changed = 1;
+}
+
+message SearchRequest {
+  enum Joiner {
+    AND = 0;
+    OR = 1;
+  }
+  map<string, google.protobuf.Any> query = 1;
+  Joiner joiner = 2;
+}
 
 message Int32 {
   sint32 value = 1;

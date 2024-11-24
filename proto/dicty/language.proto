@@ -5,6 +5,16 @@ option java_multiple_files = true;
 package dicty.language;
 
 import "dicty/part_of_speech.proto";
+import "dicty/generic.proto";
+
+service LanguagesService {
+  rpc SearchLanguages(generic.SearchRequest) returns (SearchLanguagesResponse);
+  rpc AddOrUpdateLanguage(Language) returns (generic.AddOrUpdateResponse);
+}
+
+message SearchLanguagesResponse {
+  repeated Language languages = 1;
+}
 
 message Language {
   string code = 1;

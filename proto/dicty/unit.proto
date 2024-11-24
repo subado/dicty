@@ -7,6 +7,16 @@ package dicty.unit;
 import "dicty/definition.proto";
 import "dicty/source.proto";
 import "dicty/language.proto";
+import "dicty/generic.proto";
+
+service UnitsService {
+  rpc SearchUnits(generic.SearchRequest) returns (SearchUnitsResponse);
+  rpc AddOrUpdateUnit(Unit) returns (generic.AddOrUpdateResponse);
+}
+
+message SearchUnitsResponse {
+  repeated Unit units = 1;
+}
 
 message Unit {
   string uuid = 1;
