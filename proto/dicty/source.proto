@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+
+package dicty.source;
+
+import "dicty/language.proto";
+
+message Source {
+  string uuid = 1;
+  string name = 2;
+  string url = 3;
+  repeated language.Language languages = 4;
+}

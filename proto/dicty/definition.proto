@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+
+package dicty.definition;
+
+import "dicty/pronunciation.proto";
+import "dicty/sense.proto";
+import "dicty/part_of_speech.proto";
+
+message Definition {
+  string uuid = 1;
+  pronunciation.Pronunciation pronunciation = 2;
+  part_of_speech.PartOfSpeech part_of_speech = 3;
+  repeated sense.Sense senses = 4;
+}

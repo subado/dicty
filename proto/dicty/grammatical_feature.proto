@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+
+package dicty.grammatical_feature;
+
+message GrammaticalFeature {
+  string uuid = 1;
+  string value = 2;
+}

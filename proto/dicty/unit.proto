@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+
+package dicty.unit;
+
+import "dicty/definition.proto";
+import "dicty/source.proto";
+import "dicty/language.proto";
+
+message Unit {
+  string uuid = 1;
+  string value = 2;
+  source.Source source = 3;
+  language.Language language = 4;
+  repeated definition.Definition definitions = 5;
+}

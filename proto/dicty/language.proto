@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+
+package dicty.language;
+
+import "dicty/part_of_speech.proto";
+
+message Language {
+  string code = 1;
+  string name = 2;
+  string direction = 3;
+  repeated part_of_speech.PartOfSpeech parts_of_speech = 4;
+}

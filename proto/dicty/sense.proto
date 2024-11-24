@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+
+package dicty.sense;
+
+import "dicty/example.proto";
+import "dicty/synonym.proto";
+import "dicty/grammatical_feature.proto";
+
+message Sense {
+  string uuid = 1;
+  repeated example.Example examples = 2;
+  repeated synonym.Synonym synonyms = 3;
+  repeated grammatical_feature.GrammaticalFeature grammatical_features = 4;
+}
