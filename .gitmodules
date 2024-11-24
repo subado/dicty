@@ -1,0 +1,3 @@
+[submodule "k8s/kubespray"]
+	path = k8s/kubespray
+	url = git@github.com:subado/dicty_kubespray.git
