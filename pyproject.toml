@@ -16,6 +16,7 @@ grpcio = "^1.68.0"
 pycountry = "^24.6.1"
 alembic = "^1.14.0"
 grpcio-tools = "^1.68.0"
+dynaconf = "^3.2.6"
 
 [tool.poetry.group.dev.dependencies]
 mypy = "^1.13.0"
@@ -23,3 +24,8 @@ mypy = "^1.13.0"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry-auto-export]
+output = "requirements.txt"
+without_hashes = true
+without = ["dev"]
