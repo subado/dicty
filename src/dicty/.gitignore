@@ -1,0 +1,6 @@
+# Ignore protobuf generated files
+proto/*
+!proto/README.md
+
+# Ignore dynaconf secret files
+.secrets.*
