@@ -6,6 +6,6 @@ package dicty.pronunciation;
 
 message Pronunciation {
   string uuid = 1;
-  string audio_path = 2;
-  string transcription = 3;
+  optional string audio_path = 2;
+  optional string transcription = 3;
 }

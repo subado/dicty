@@ -19,6 +19,7 @@ message SearchRequest {
   }
   map<string, google.protobuf.Any> query = 1;
   Joiner joiner = 2;
+  optional bool ignore_cache = 3;
 }
 
 message Int32 {

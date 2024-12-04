@@ -2,10 +2,9 @@ syntax = "proto3";
 
 option java_multiple_files = true;
 
-package dicty.synonym;
+package dicty.style;
 
-message Synonym {
+message Style {
   string uuid = 1;
   string value = 2;
-  string unit_uuid = 3;
 }

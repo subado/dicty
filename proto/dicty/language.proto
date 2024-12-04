@@ -19,6 +19,5 @@ message SearchLanguagesResponse {
 message Language {
   string code = 1;
   string name = 2;
-  string direction = 3;
-  repeated part_of_speech.PartOfSpeech parts_of_speech = 4;
+  repeated part_of_speech.PartOfSpeech parts_of_speech = 3;
 }

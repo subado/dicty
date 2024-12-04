@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+
+package dicty.form;
+
+import "dicty/pronunciation.proto";
+
+message Form {
+  string uuid = 1;
+  repeated string names = 2;
+  string value = 3;
+  repeated pronunciation.Pronunciation pronunciations = 4;
+}

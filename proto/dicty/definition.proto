@@ -4,10 +4,10 @@ option java_multiple_files = true;
 
 package dicty.definition;
 
-import "dicty/pronunciation.proto";
 import "dicty/sense.proto";
 import "dicty/part_of_speech.proto";
 import "dicty/generic.proto";
+import "dicty/form.proto";
 
 service DefinitionsService {
   rpc SearchDefinitions(generic.SearchRequest)
@@ -21,7 +21,7 @@ message SearchDefinitionsResponse {
 
 message Definition {
   string uuid = 1;
-  pronunciation.Pronunciation pronunciation = 2;
-  part_of_speech.PartOfSpeech part_of_speech = 3;
-  repeated sense.Sense senses = 4;
+  part_of_speech.PartOfSpeech part_of_speech = 2;
+  repeated sense.Sense senses = 3;
+  repeated form.Form forms = 4;
 }
