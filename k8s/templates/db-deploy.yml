@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: default
+  name: db-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db
+  template:
+    metadata:
+      labels:
+        app: db
+    spec:
+      containers:
+        - name: db
+          image: "postgres:alpine"
+          ports:
+            - containerPort: {{ k8s_rollout_db_svc_port }}
+          env:
+            - name: POSTGRES_PASSWORD
+              value: "{{ DB_PASSWORD }}"
+
+            - name: POSTGRES_USER
+              value: "{{ DB_USER }}"
+
+            - name: POSTGRES_DB
+              value: "{{ DB_DB }}"

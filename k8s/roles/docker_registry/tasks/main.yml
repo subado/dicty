@@ -1,0 +1,51 @@
+---
+# tasks file for docker-registry
+- name: "Install necessary package"
+  become: true
+  community.general.xbps:
+    name:
+      - docker
+      - python3-docker
+      - python3-requests
+      - docker-buildx
+    state: "installed"
+
+- name: "Adding '{{ ansible_user }}' to group docker"
+  become: true
+  user:
+    name: "{{ ansible_user }}"
+    groups: "docker"
+    append: true
+
+- name: "Run a docker registry"
+  community.docker.docker_container:
+    name: "{{ docker_registry_container_name }}"
+    image: "registry"
+    state: "started"
+    env:
+      "REGISTRY_STORAGE_DELETE_ENABLED": "true"
+    ports:
+      - "{{ REGISTRY_PORT }}:5000"
+
+- name: "Allow the insecure registry"
+  become: true
+  template:
+    src: "templates/daemon.json"
+    dest: "/etc/docker/daemon.json"
+  register: template_result
+
+- name: "Restart docker daemon if config changed"
+  become: true
+  community.general.runit:
+    name: "docker"
+    state: "restarted"
+  when: "template_result.changed"
+
+- name: "Set empty list to images fact"
+  set_fact:
+    images: []
+
+- name: "Loop over Dockerfiles templates"
+  include_tasks: "tasks/handle_dockerfile.yml"
+  loop: "{{ lookup('ansible.builtin.fileglob',
+    'templates/*Dockerfile', wantlist=True) }}"

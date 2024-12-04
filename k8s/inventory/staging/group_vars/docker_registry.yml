@@ -1,0 +1,5 @@
+---
+docker_registry_container_name: "docker_registry"
+docker_registry_image_build_path: "{{ playbook_dir | dirname }}"
+docker_db_port: "{{ DB_PORT }}"
+docker_dicty_port: "{{ DICTY_PORT }}"

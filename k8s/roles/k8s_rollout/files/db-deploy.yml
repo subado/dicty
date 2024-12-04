@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: default
+  name: db-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db
+  template:
+    metadata:
+      labels:
+        app: db
+    spec:
+      containers:
+        - name: db
+          image: "postgres:alpine"
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_PASSWORD
+              value: "VXPNRVk0R0WMToc8MgSYmq2SP"
+
+            - name: POSTGRES_USER
+              value: "dicty"
+
+            - name: POSTGRES_DB
+              value: "dicty"

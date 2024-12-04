@@ -1,0 +1,26 @@
+---
+- block:
+    - name: "Template {{ manifest }} to {{ dest_manifest }}"
+      delegate_to: localhost
+      run_once: true
+      template:
+        src: "{{ manifest }}"
+        dest: "{{ dest_manifest }}"
+
+    - name: "Replace old images with new images in {{ dest_manifest }}"
+      delegate_to: localhost
+      run_once: true
+      replace:
+        path: "{{ dest_manifest }}"
+        regexp: "{{ item | split('@') | first }}(@[:\\.A-Z0-9a-z-_]*)?\"$"
+        replace: '{{ item }}"'
+      loop: "{{ hostvars[groups['docker_registry'][0]]['images'] }}"
+
+    - name: "Apply manifest file on k8s cluster"
+      become: true
+      kubernetes.core.k8s:
+        apply: true
+        definition: "{{ lookup('file', dest_manifest) }}"
+
+  vars:
+    dest_manifest: "{{ role_path }}/files/{{ manifest | basename }}"

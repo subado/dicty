@@ -1,0 +1,5 @@
+{
+  "insecure-registries": [
+    "{{ hostvars[groups['docker_registry'][0]]['ansible_host'] }}:{{ REGISTRY_PORT }}"
+  ]
+}

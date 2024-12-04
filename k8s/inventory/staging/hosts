@@ -1,0 +1,5 @@
+[docker_registry]
+localhost
+
+[k8s_rollout]
+vagrant-k8s

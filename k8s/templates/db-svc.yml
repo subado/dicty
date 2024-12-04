@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: default
+  name: "{{ DB_HOST }}"
+  labels:
+    app: db
+spec:
+  type: NodePort
+  ports:
+    - port: {{ k8s_rollout_db_svc_port }}
+      nodePort: {{ k8s_rollout_db_svc_node_port }}
+      protocol: TCP
+  selector:
+    app: db

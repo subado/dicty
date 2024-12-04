@@ -1,0 +1,5 @@
+---
+k8s_rollout_db_svc_port: "{{ DB_PORT }}"
+k8s_rollout_db_svc_node_port: "30432"
+k8s_rollout_dicty_svc_port: "{{ DICTY_PORT }}"
+k8s_rollout_dicty_svc_node_port: "30051"

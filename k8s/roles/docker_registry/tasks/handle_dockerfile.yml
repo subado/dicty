@@ -1,0 +1,84 @@
+---
+- name: "Create a temp directory"
+  tempfile:
+    state: directory
+  register: tempdir
+
+- block:
+    - block:
+        - name: "Copy {{ docker_registry_image_build_path }} to {{ tempdir.path }}"
+          copy:
+            src: "{{ docker_registry_image_build_path }}"
+            dest: "{{ tempdir.path }}"
+
+        - name: "Override docker_registry_image_build_path with {{ tempdir.path }}"
+          set_fact:
+            docker_registry_image_build_path: "{{ tempdir.path }}"
+
+      when: "inventory_hostname != 'localhost'"
+
+    - name: "Template {{ item }} to {{ dockerfile }}"
+      template:
+        src: "{{ item }}"
+        dest: "{{ dockerfile }}"
+
+    - name: "Get a local image"
+      community.docker.docker_image_info:
+        name: "{{ image_name }}"
+      register: local_images
+
+    - name: "Build {{ dockerfile }} docker image"
+      community.docker.docker_image_build:
+        name: "{{ image_name }}"
+        path: "{{ docker_registry_image_build_path }}"
+        dockerfile: "{{ dockerfile }}"
+        rebuild: "always"
+      register: build_result
+
+    - block:
+        - name: "Remove old tagged image"
+          community.docker.docker_image_remove:
+            name: "{{ registry_image_name }}"
+            tag: "latest"
+          when: "local_images.images | length > 0"
+
+        - name: "Tag {{ image_name }} with {{ registry_image_name }}"
+          community.docker.docker_image_tag:
+            name: "{{ image_name }}"
+            repository: "{{ registry_image_name }}"
+
+        - name: "Push {{ registry_image_name }}"
+          community.docker.docker_image_push:
+            name: "{{ registry_image_name }}"
+
+        - name: "Get a pushed image"
+          community.docker.docker_image_info:
+            name: "{{ registry_image_name }}:latest"
+          register: registry_image
+
+        - name: "Add changed {{ registry_image_name }} to facts"
+          set_fact:
+            images: "{{ images + [ registry_image['images'][0]['RepoDigests'][0] ] }}"
+
+        # - name: "Pull image to delete tags in the registry"
+        #   community.docker.docker_image_pull:
+        #     name: "{{ docker_registry_cli_image }}"
+
+        # - name: "Mark old tags as deleted in the registry"
+        #   command: "docker run --rm --link {{ docker_registry_container_name }} {{ docker_registry_cli_image }} -r http://{{ docker_registry_container_name }}:{{ REGISTRY_PORT }} --delete --num 2"
+
+        # - name: "Garbage collect tags marked as deleted in the registry"
+        #   command: "docker exec {{ docker_registry_container_name }} bin/registry
+        #     garbage-collect --delete-untagged=true /etc/docker/registry/config.yml"
+
+      when: " (local_images.images | length == 0) or build_result.image.Id != local_images.images[0].Id"
+
+  vars:
+    image_name: "{{ item | basename | splitext | first }}"
+    registry_image_name: "{{ ansible_host }}:{{ REGISTRY_PORT }}/{{ image_name }}"
+    dockerfile: "{{ tempdir.path }}/{{ item | basename }}"
+
+- name: "Delete a temp directory"
+  file:
+    path: "{{ tempdir.path }}"
+    state: "absent"

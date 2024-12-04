@@ -1,0 +1,12 @@
+---
+- name: "Set up docker_registry"
+  hosts: docker_registry
+  roles:
+    - role: docker_registry
+  tags: docker_registry
+
+- name: "Apply manifests to the k8s_rollout control node"
+  hosts: k8s_rollout
+  roles:
+    - role: k8s_rollout
+  tags: k8s_rollout

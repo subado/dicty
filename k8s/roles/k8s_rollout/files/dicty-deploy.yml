@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: default
+  name: dicty-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dicty
+  template:
+    metadata:
+      labels:
+        app: dicty
+    spec:
+      containers:
+        - name: dicty
+          image: "192.168.56.1:5000/dicty"
+          ports:
+            - containerPort: 50051

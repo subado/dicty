@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: default
+  name: dicty-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dicty
+  template:
+    metadata:
+      labels:
+        app: dicty
+    spec:
+      containers:
+        - name: dicty
+          image: "{{ hostvars[groups['docker_registry'][0]]['ansible_host'] }}:{{ REGISTRY_PORT }}/dicty"
+          ports:
+            - containerPort: {{ k8s_rollout_dicty_svc_port }}
